@@ -46,7 +46,6 @@ def _gitignore_entry_to_regex(entry):
     return ret
 
 
-@funcy.runonce
 def sync(sourcedir=None, exclude_gitignore_entries=None, exclude_regex_list=None):
     """ Create and populate workdir.options.path, memoized so that it only runs once """
     _set_log_level()
