@@ -3,6 +3,7 @@ import shutil
 import dirsync
 import logging
 import funcy
+import copy
 from contextlib import contextmanager
 from ._version import __version__  # flake8: noqa
 
@@ -13,7 +14,7 @@ class _WorkdirOptions(object):
     def __init__(self):
         self.path = None
         self.debug = False
-        self.sync_sourcedir = os.getcwd()
+        self.sync_sourcedir = None
         self.sync_exclude_gitignore_entries = True
         self.sync_exclude_regex_list = []
 
@@ -49,10 +50,10 @@ def _gitignore_entry_to_regex(entry):
 def sync(sourcedir=None, exclude_gitignore_entries=None, exclude_regex_list=None):
     """ Create and populate workdir.options.path, memoized so that it only runs once """
     _set_log_level()
-    sourcedir = sourcedir or options.sync_sourcedir
-    exclude_gitignore_entries = \
-        False if exclude_gitignore_entries is False else options.sync_exclude_gitignore_entries
-    exclude_regex_list = exclude_regex_list or options.sync_exclude_regex_list
+    sourcedir = sourcedir or options.sync_sourcedir or os.getcwd()
+    if exclude_gitignore_entries is None:
+        exclude_gitignore_entries = options.sync_exclude_gitignore_entries
+    exclude_regex_list = exclude_regex_list or copy.copy(options.sync_exclude_regex_list)
     gitignore_path = os.path.join(sourcedir, '.gitignore')
     if exclude_gitignore_entries and os.path.isfile(gitignore_path):
         gitignore_lines = []

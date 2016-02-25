@@ -3,11 +3,11 @@ import workdir
 import logging
 
 
-def test__set_log_level():
-    workdir.options.debug = True
+def test__set_log_level(monkeypatch):
+    monkeypatch.setattr('workdir.options.debug', True)
     workdir._set_log_level()
     assert workdir.logger.getEffectiveLevel() == logging.DEBUG
-    workdir.options.debug = False
+    monkeypatch.setattr('workdir.options.debug', False)
     workdir._set_log_level()
     assert workdir.logger.getEffectiveLevel() == logging.INFO
 
@@ -43,7 +43,7 @@ def test_sync_with_gitignore(tmpdir):
         assert not os.path.exists(os.path.join(workdir.options.path, 'module.pyc'))
 
 
-def test_sync_without_gitignore(tmpdir):
+def test_sync_without_gitignore(tmpdir, monkeypatch):
     with tmpdir.as_cwd():
         _setup_gitignore_test()
         workdir.options.path = 'test_sync_without_gitignore'
@@ -51,6 +51,23 @@ def test_sync_without_gitignore(tmpdir):
         workdir.sync(exclude_gitignore_entries=False)
         assert os.path.isfile(os.path.join(workdir.options.path, 'module.py'))
         assert os.path.isfile(os.path.join(workdir.options.path, 'module.pyc'))
+        workdir.clean()
+        monkeypatch.setattr('workdir.options.sync_exclude_gitignore_entries', False)
+        workdir.sync()
+        assert os.path.isfile(os.path.join(workdir.options.path, 'module.py'))
+        assert os.path.isfile(os.path.join(workdir.options.path, 'module.pyc'))
+
+
+def test_sync_explicit_excludes(tmpdir, monkeypatch):
+    with tmpdir.as_cwd():
+        _setup_gitignore_test()
+        workdir.options.path = 'test_sync_explicit_excludes'
+        workdir.sync(exclude_gitignore_entries=False, exclude_regex_list=[r'.*\.py$'])
+        assert not os.path.isfile(os.path.join(workdir.options.path, 'module.py'))
+        assert os.path.isfile(os.path.join(workdir.options.path, 'module.pyc'))
+        monkeypatch.setattr('workdir.options.sync_exclude_regex_list', [r'.*\.py'])
+        workdir.sync()
+        assert not os.path.isfile(os.path.join(workdir.options.path, 'module.py'))
 
 
 def test_create(tmpdir):
