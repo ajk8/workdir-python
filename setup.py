@@ -2,7 +2,7 @@ from setuptools import setup
 
 PROJECT_NAME = 'workdir'
 GITHUB_USER = 'ajk8'
-GITHUB_ROOT = 'https://github.com/{}/{}'.format(GITHUB_USER, PROJECT_NAME)
+GITHUB_ROOT = 'https://github.com/{}/{}-python'.format(GITHUB_USER, PROJECT_NAME)
 
 # pull in __version__ variable
 with open('{}/_version.py'.format(PROJECT_NAME)) as f:
