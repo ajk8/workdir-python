@@ -13,6 +13,9 @@ class _WorkdirOptions(object):
     def __init__(self):
         self.path = None
         self.debug = False
+        self.sync_sourcedir = os.getcwd()
+        self.sync_exclude_gitignore_entries = True
+        self.sync_exclude_regex_list = []
 
 
 options = _WorkdirOptions()
@@ -43,13 +46,14 @@ def _gitignore_entry_to_regex(entry):
     return ret
 
 
-@funcy.memoize
+@funcy.runonce
 def sync(sourcedir=None, exclude_gitignore_entries=None, exclude_regex_list=None):
     """ Create and populate workdir.options.path, memoized so that it only runs once """
     _set_log_level()
-    sourcedir = sourcedir or os.getcwd()
-    exclude_gitignore_entries = False if exclude_gitignore_entries is False else True
-    exclude_regex_list = exclude_regex_list or []
+    sourcedir = sourcedir or options.sync_sourcedir
+    exclude_gitignore_entries = \
+        False if exclude_gitignore_entries is False else options.sync_exclude_gitignore_entries
+    exclude_regex_list = exclude_regex_list or options.sync_exclude_regex_list
     gitignore_path = os.path.join(sourcedir, '.gitignore')
     if exclude_gitignore_entries and os.path.isfile(gitignore_path):
         gitignore_lines = []
