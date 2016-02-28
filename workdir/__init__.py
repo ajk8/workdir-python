@@ -59,7 +59,8 @@ def sync(sourcedir=None, exclude_gitignore_entries=None, exclude_regex_list=None
         gitignore_lines = []
         with open(gitignore_path) as gitignore:
             for line in gitignore.readlines():
-                if not funcy.re_test(r'^\s+#', line):
+                line = line.strip()
+                if line and not line.startswith('#'):
                     gitignore_lines.append(_gitignore_entry_to_regex(line))
         exclude_regex_list += gitignore_lines
     dirsync_logger = logging.getLogger('dirsync')
