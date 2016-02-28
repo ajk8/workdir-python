@@ -20,9 +20,9 @@ setup(
     license='MIT',
     packages=[PROJECT_NAME],
     install_requires=[
-        'funcy==1.7',
-        'dirsync==2.1',
-        'six==1.10.0'
+        'funcy>=1.4',
+        'dirsync>=2.2.1',
+        'six'  # this is required by dirsync, but not included there as a dependency
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
