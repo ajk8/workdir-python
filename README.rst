@@ -2,6 +2,9 @@
 workdir
 =======
 
+.. image:: https://travis-ci.org/ajk8/workdir-python.svg?branch=master
+    :target: https://travis-ci.org/ajk8/workdir-python
+
 A simple module for easily isolating temporary file I/O to a directory.  Ever developed a command-line tool which required a lot of file manipulation?  Caching, perhaps?  You don't want to use the cwd and keeping all of your paths straight if you're working outside of it can be a pain.  This tool may be the pain-reliever you need!
 
 A tale of sin and woe
