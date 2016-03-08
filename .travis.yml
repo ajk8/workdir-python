@@ -9,12 +9,12 @@ python:
 
 install:
     - pip install --upgrade pip setuptools
-    - pip install -r requirements.txt
-    - pip install hatchery
+    - pip install -e .
+    - pip install tox
     - pip install coveralls
 
 script:
-    - hatchery clean test
+    - tox
 
 after_success:
     - coveralls
