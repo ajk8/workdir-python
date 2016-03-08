@@ -10,7 +10,7 @@ python:
 install:
     - pip install --upgrade pip setuptools
     - pip install -e .
-    - pip install tox
+    - pip install tox-travis
     - pip install coveralls
 
 script:
