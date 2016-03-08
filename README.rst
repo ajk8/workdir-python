@@ -50,9 +50,9 @@ Use it as a working directory in your git repo (added to `.gitignore`, of course
         futz_with_source_tree()
         more_futzing()
 
-.. |Latest Version| image:: https://img.shields.io/pypi/v/fencepy.svg
-    :target: https://pypi.python.org/pypi/fencepy/
+.. |Latest Version| image:: https://img.shields.io/pypi/v/workdir-python.svg
+    :target: https://pypi.python.org/pypi/workdir-python
     :alt: Latest Version
-.. |Travis Status| image:: https://img.shields.io/travis/ajk8/fencepy/master.svg
-    :target: https://travis-ci.org/ajk8/fencepy
+.. |Travis Status| image:: https://img.shields.io/travis/ajk8/workdir-python/master.svg
+    :target: https://travis-ci.org/ajk8/workdir-python
     :alt: Travis-ci build status
