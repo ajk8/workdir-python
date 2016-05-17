@@ -14,7 +14,7 @@ Well, not really.  I've just developed a bunch of tools that rely on various bit
 Compatibility
 =============
 
-As far as I know, `workdir` is compatible with every version of Python from 2.6 through 3.5.  It should also be compatible with all major platforms including Linux, OSX, and Windows.  If not, let me know!
+As far as I know, ``workdir`` is compatible with every version of Python from 2.6 through 3.5.  It should also be compatible with all major platforms including Linux, OSX, and Windows.  If not, let me know!
 
 Installation
 ============
