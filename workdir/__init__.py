@@ -2,7 +2,6 @@ import os
 import shutil
 import dirsync
 import logging
-import funcy
 import copy
 from contextlib import contextmanager
 from ._version import __version__  # flake8: noqa
@@ -12,11 +11,19 @@ logger = logging.getLogger(__name__)
 
 class _WorkdirOptions(object):
     def __init__(self):
-        self.path = None
+        self._path = None
         self.debug = False
         self.sync_sourcedir = None
         self.sync_exclude_gitignore_entries = True
         self.sync_exclude_regex_list = []
+
+    @property
+    def path(self):
+        return self._path
+
+    @path.setter
+    def path(self, abs_or_rel_path):
+        self._path = os.path.abspath(abs_or_rel_path)
 
 
 options = _WorkdirOptions()

@@ -12,12 +12,17 @@ def test__set_log_level(monkeypatch):
     assert workdir.logger.getEffectiveLevel() == logging.INFO
 
 
+def test__set_path():
+    workdir.options.path = 'test__set_path'
+    assert workdir.options.path == os.path.abspath('test__set_path')
+
+
 def test_as_cwd(tmpdir):
     with tmpdir.as_cwd():
         workdir.options.path = 'test_as_cwd'
         os.mkdir(workdir.options.path)
         with workdir.as_cwd():
-            assert os.getcwd() == os.path.join(str(tmpdir), workdir.options.path)
+            assert os.getcwd() == os.path.join(str(tmpdir), 'test_as_cwd')
         assert os.getcwd() == str(tmpdir)
 
 
@@ -103,9 +108,10 @@ def test_remove(tmpdir):
 
 def test_path_to_file():
     workdir.options.path = 'test_path_to_file'
-    assert workdir.path_to_file('myfile') == os.path.join('test_path_to_file', 'myfile')
+    path_should_be = os.path.abspath('test_path_to_file')
+    assert workdir.path_to_file('myfile') == os.path.join(path_should_be, 'myfile')
     assert workdir.path_to_file('mydir', 'myfile') == os.path.join(
-        'test_path_to_file', 'mydir', 'myfile'
+        path_should_be, 'mydir', 'myfile'
     )
 
 
